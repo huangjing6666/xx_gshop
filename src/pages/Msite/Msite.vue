@@ -1,7 +1,7 @@
 <template>
   <section class="msite">
     <!--首页头部-->
-    <HeaderTop title="address.name">
+    <HeaderTop :title="address.name">
        <span class="header_search" slot="left">
             <i class="iconfont icon-sousuo"></i>
           </span>
@@ -14,12 +14,13 @@
     <nav class="msite_nav">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="(categorys,index) in categorysArry" :key="index">
+          <div class="swiper-slide" v-for="(categorys,index) in categorysArr" :key="index">
             <a href="javascript:" class="link_to_food" v-for="(category,index) in categorys" :key="index">
               <div class="food_container">
-                <img src="./images/nav/1.jpg">
+                https://fuss10.elemecdn.com
+                <img :src="baseImagesUrl + category.image_url">
               </div>
-              <span>甜品饮品</span>
+              <span>{{category.title}}</span>
             </a>
           </div>
         </div>
@@ -48,7 +49,11 @@ import ShopList from '../../components/ShopList/ShopList'
 
 export default {
   name: 'Msite',
-
+  data(){
+    return {
+      baseImagesUrl:'https://fuss10.elemecdn.com'
+    }
+  },
   mounted () {
     this.$store.dispatch('getCategorys')
     // 创建一个Swiper实例对象，来实现轮播
@@ -62,9 +67,9 @@ export default {
     })
   },
   computed: {
-    ...mapState(['categorys']),
+    ...mapState(['address','categorys']),
     /* 根据categorys 一维数组生成一个二维数组 */
-    categorysArry() {
+    categorysArr() {
       const {categorys} = this
       // 准备空的二维数组
       const arr = []
