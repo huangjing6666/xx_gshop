@@ -12,7 +12,7 @@
 
     <!--首页导航-->
     <nav class="msite_nav">
-      <div class="swiper-container">
+      <div class="swiper-container" v-if="categorys.length">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(categorys,index) in categorysArr" :key="index">
             <a href="javascript:" class="link_to_food" v-for="(category,index) in categorys" :key="index">
@@ -27,6 +27,7 @@
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
       </div>
+      <img v-else src="./images/msite_back.svg" alt="back">
     </nav>
     <!--首页附近商家-->
     <div class="msite_shop_list">
@@ -56,15 +57,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('getCategorys')
-    // 创建一个Swiper实例对象，来实现轮播
-    /* eslint-disable no-new */
-    new Swiper('.swiper-container', {
-      loop: true, // 循环模式选项
-      // 如果需要分页器
-      pagination: {
-        el: '.swiper-pagination'
-      }
-    })
+    this.$store.dispatch('getShops')
   },
   computed: {
     ...mapState(['address','categorys']),
@@ -89,6 +82,31 @@ export default {
         minArr.push(c)
       })
       return arr
+    }
+  },
+  watch:{
+    categorys(value){ //categorys数组中有数据了，在一步更新界面之前
+      /*setTimeout(()=>{
+        new Swiper('.swiper-container', {
+          loop: true, // 循环模式选项
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        })
+      },100)*/
+      // 界面更新就立即创建Swiper对象
+      this.$nextTick(()=>{  // 一旦完成界面更新，立即调用（此条语句要写在数据更新之后）
+        // 创建一个Swiper实例对象，来实现轮播
+        /* eslint-disable no-new */
+        new Swiper('.swiper-container', {
+          loop: true, // 循环模式选项
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        })
+      })
     }
   },
   components: {
