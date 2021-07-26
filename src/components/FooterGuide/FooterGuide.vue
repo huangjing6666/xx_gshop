@@ -3,7 +3,7 @@
     <span class="guide_item " v-for="(item,index) in indexTabs" :key="index"
          :class="[indexTabsIndex === index ? 'on' : '']" @click="changeTabs(index)">
       <span class="item_icon">
-        <i class="iconfont" :class="['icon-'+item.icon]"></i>
+        <i class="iconfont" :class="['icon-'+ item.icon]"></i>
       </span>
       <span>{{item.title}}</span>
     </span>

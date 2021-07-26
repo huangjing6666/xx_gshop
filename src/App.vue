@@ -1,3 +1,4 @@
+<script src="router/index.js"></script>
 <template>
   <div id="app">
     <router-view/>
@@ -19,9 +20,10 @@ export default {
     // 分发
     // this.$store.dispatch('getAddress')
     this.getAddress()
+    this.getUserInfo()
   },
   methods: {
-    ...mapActions(['getAddress'])
+    ...mapActions(['getAddress', 'getUserInfo'])
   },
   components: {
     FooterGuide
