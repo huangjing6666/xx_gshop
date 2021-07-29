@@ -9,7 +9,10 @@ import {
   RESET_USER_INFO,
   RECEIVE_GOODS,
   RECEIVE_INFO,
-  RECEIVE_RATINGS
+  RECEIVE_RATINGS,
+  INCREMENT_FOOD_COUNT,
+  DECREMENT_FOOD_COUNT,
+  CLEAR_CART
 } from './mutation-types'
 import {
   reqAddress,
@@ -95,12 +98,25 @@ export default {
     }
   },
   // 异步获取商家商品列表
-  async getShopGoods({commit}) {
+  async getShopGoods({commit} ,callback) {
     const result = await reqShopGoods()
     if(result.code===0) {
       const goods = result.data
       commit(RECEIVE_GOODS, {goods})
+      callback && callback()
     }
   },
 
+  // 同步更新
+  updateFoodCount({commit},{food,isAdd}){
+    if(isAdd){
+      commit(INCREMENT_FOOD_COUNT,{food})
+    }else {
+      commit(DECREMENT_FOOD_COUNT,{food})
+    }
+  },
+  // 清空购物车
+  clearCart({commit}){
+    commit(CLEAR_CART)
+  }
 }

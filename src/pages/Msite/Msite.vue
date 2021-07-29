@@ -4,10 +4,10 @@
     <HeaderTop :title="address.name">
        <span class="header_search" slot="left">
             <i class="iconfont icon-sousuo"></i>
-          </span>
-      <span class="header_login" slot="right">
+       </span>
+       <span class="header_login" slot="right">
             <span class="header_login_text">登录|注册</span>
-          </span>
+       </span>
     </HeaderTop>
 
     <!--首页导航-->
@@ -62,7 +62,10 @@ export default {
   computed: {
     ...mapState(['address','categorys']),
     /* 根据categorys 一维数组生成一个二维数组 */
-    categorysArr() {
+
+
+    // *********二维数组第一种方法*********
+    /*categorysArr() {
       const {categorys} = this
       // 准备空的二维数组
       const arr = []
@@ -82,6 +85,20 @@ export default {
         minArr.push(c)
       })
       return arr
+    }*/
+
+    // *********二维数组第二种方法*********
+    categorysArr(){
+      const {categorys} = this
+      let len = categorys.length
+      let n = 8
+      let lineNum = len % 8 ===0 ? len / 8 : Math.floor( (len / 7) + 1 )
+      let res = []
+      for( let i = 0 ; i<lineNum; i++){
+        let temp = categorys.slice(i*n, i*n+n)
+        res.push(JSON.parse(JSON.stringify(temp)))
+      }
+      return res
     }
   },
   watch:{

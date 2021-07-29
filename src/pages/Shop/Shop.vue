@@ -23,7 +23,7 @@
     mounted() {
       this.$store.dispatch('getShopInfo')
     },
-    components: {ShopHeader}
+    components: { ShopHeader }
   }
 </script>
 
