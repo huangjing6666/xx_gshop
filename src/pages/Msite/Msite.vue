@@ -2,12 +2,17 @@
   <section class="msite">
     <!--首页头部-->
     <HeaderTop :title="address.name">
-       <span class="header_search" slot="left">
-            <i class="iconfont icon-sousuo"></i>
-       </span>
-       <span class="header_login" slot="right">
-            <span class="header_login_text">登录|注册</span>
-       </span>
+      <router-link class="header_search" slot="left" to="/search">
+        <i class="iconfont icon-sousuo"></i>
+      </router-link>
+      <router-link slot="right"  :to="userInfo._id ? '/userinfo': '/login'" class="header_login">
+        <span class="header_login_text" v-if="!userInfo._id">
+          登录|注册
+        </span>
+        <span class="header_login_text" v-else>
+           <i class="iconfont icon-person"></i>
+        </span>
+      </router-link>
     </HeaderTop>
 
     <!--首页导航-->
@@ -60,7 +65,7 @@ export default {
     this.$store.dispatch('getShops')
   },
   computed: {
-    ...mapState(['address','categorys']),
+    ...mapState(['address','categorys','userInfo']),
     /* 根据categorys 一维数组生成一个二维数组 */
 
 
@@ -133,7 +138,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus" >
   @import "../../common/stylus/mixins.styl"
   .msite  //首页
     width 100%
